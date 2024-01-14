@@ -18,13 +18,13 @@ export const loginUser = async (req: Request, res: Response) => {
     const userCheck = await User.findOne({ email })
 
     if (!userCheck) {
-      return res.status(401).json({ message: 'Invalid credentials.' })
+      return res.status(400).json({ message: 'Invalid credentials.' })
     }
 
     const isPasswordMatch = await bcrypt.compare(password, userCheck.password)
 
     if (!isPasswordMatch) {
-      return res.status(401).json({ message: 'Invalid credentials.' })
+      return res.status(400).json({ message: 'Invalid credentials.' })
     }
 
     const token = jwt.sign(
@@ -50,4 +50,12 @@ export const loginUser = async (req: Request, res: Response) => {
       message: 'Server error'
     })
   }
+}
+
+export const logoutUser = async (req: Request, res: Response) => {
+  res.cookie('auth_token', '', {
+    expires: new Date(0)
+  })
+
+  res.send()
 }
