@@ -22,7 +22,9 @@ app.use(
 app.use('/api/users', userRoutes)
 app.use('/api/auth', authRoutes)
 
-mongoose.connect(process.env.MONGO_URI as string)
+mongoose
+  .connect(process.env.MONGO_URI as string)
+  .then(() => console.log('MongoDB Connected'))
 
 app.listen(5000, () => {
   console.log('Server is running on port 5000')
