@@ -2,18 +2,14 @@ import Layout from "./Layout/Layout";
 import { Route, Routes } from "react-router-dom";
 import Register from "./Pages/Register";
 import Login from "./Pages/Login";
+import AddHotel from "./Pages/AddHotel";
+import { useAppContext } from "./Context/AppContext";
 
 const App = () => {
+  const { isLoggedIn } = useAppContext();
+
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          <Layout>
-            <p>Home Page</p>
-          </Layout>
-        }
-      />
       <Route
         path="/"
         element={
@@ -48,6 +44,19 @@ const App = () => {
           </Layout>
         }
       />
+
+      {isLoggedIn && (
+        <>
+          <Route
+            path="/add-hotel"
+            element={
+              <Layout>
+                <AddHotel />
+              </Layout>
+            }
+          />
+        </>
+      )}
 
       <Route
         path="*"
