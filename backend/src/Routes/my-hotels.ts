@@ -1,8 +1,9 @@
-import express from 'express'
+import express, { Request, Response } from 'express'
 import multer from 'multer'
 import verifyToken from '../Middleware/auth'
 import { body } from 'express-validator'
 import { myHotels } from '../Controller/my-hotels'
+import Hotel from '../Models/hotel'
 
 const router = express.Router()
 const storage = multer.memoryStorage()
@@ -36,5 +37,16 @@ router.post(
   upload.array('imageFiles', 6),
   myHotels
 )
+
+router.get('/', verifyToken, async (req: Request, res: Response) => {
+  try {
+    const hotels = await Hotel.find({ userId: req.userId })
+    res.json(hotels)
+  } catch (error) {
+    res.status(500).json({
+      message: 'Error fetching hotels'
+    })
+  }
+})
 
 export default router
