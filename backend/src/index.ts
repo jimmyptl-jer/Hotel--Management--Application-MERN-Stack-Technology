@@ -15,9 +15,16 @@ app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+// app.use(
+//   cors({
+//     origin: 'http://localhost:5173', // Update with your frontend origin
+//     credentials: true
+//   })
+// )
+
 app.use(
   cors({
-    origin: 'http://localhost:5173', // Update with your frontend origin
+    origin: process.env.FRONTEND_URL,
     credentials: true
   })
 )
@@ -27,6 +34,10 @@ app.use(express.static(path.join(__dirname, '../../frontend/dist')))
 app.use('/api/users', userRoutes)
 app.use('/api/auth', authRoutes)
 app.use('/api/my-hotels', myHotelRoutes)
+
+app.get('*', (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'))
+})
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,

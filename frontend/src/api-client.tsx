@@ -1,8 +1,10 @@
 import { SignInFormData } from "./Pages/Login";
 import { RegisterFormData } from "./Pages/Register";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+
 export const register = async (formData: RegisterFormData) => {
-  const response = await fetch(`http://localhost:3000/api/users/register`, {
+  const response = await fetch(`${API_BASE_URL}/api/users/register`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -19,7 +21,7 @@ export const register = async (formData: RegisterFormData) => {
 };
 
 export const signIn = async (formData: SignInFormData) => {
-  const response = await fetch(`http://localhost:3000/api/auth/login`, {
+  const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -28,43 +30,40 @@ export const signIn = async (formData: SignInFormData) => {
     body: JSON.stringify(formData),
   });
 
-  const body = response.json();
+  const body = await response.json(); // Await the result
 
   if (!response.ok) {
-    throw new Error("Errorr...");
+    throw new Error(body.message || "Failed to log in"); // Check for the 'message' property
   }
 
   return body;
 };
 
 export const signOut = async () => {
-  const response = await fetch("http://localhost:3000/api/auth/logout", {
-    method: "POST",
+  const response = await fetch(`${API_BASE_URL}/api/auth/logout`, {
     credentials: "include",
+    method: "POST",
   });
 
   if (!response.ok) {
-    throw new Error("Failed to log out");
+    throw new Error("Error during sign out");
   }
 };
 
 export const validateToken = async () => {
-  const response = await fetch(
-    `http://localhost:3000/api/auth/validate-token`,
-    {
-      credentials: "include",
-    },
-  );
+  const response = await fetch(`${API_BASE_URL}/api/auth/validate-token`, {
+    credentials: "include",
+  });
 
   if (!response.ok) {
-    throw new Error("Token Invalid");
+    throw new Error("Token invalid");
   }
 
   return response.json();
 };
 
 export const addMyHotel = async (hotelFormData: FormData) => {
-  const response = await fetch(`http://localhost:3000/api/my-hotels`, {
+  const response = await fetch(`${API_BASE_URL}/api/my-hotels`, {
     method: "POST",
     credentials: "include",
     body: hotelFormData,
