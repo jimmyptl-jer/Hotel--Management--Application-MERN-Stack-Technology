@@ -11,13 +11,13 @@ const EditHotel = () => {
 
   const { data: hotel } = useQuery(
     "fetchMyHotelById",
-    () => apiClient.fetchHotelById(hotelId || ""),
+    () => apiClient.fetchMyHotelById(hotelId || ""),
     {
       enabled: !!hotelId,
     },
   );
 
-  const { mutate, isLoading } = useMutation(apiClient.updateHotelById, {
+  const { mutate, isLoading } = useMutation(apiClient.updateMyHotelById, {
     onSuccess: () => {
       showToast({ message: "Hotel Saved!", type: "SUCCESS" });
       navigate("/my-hotels");

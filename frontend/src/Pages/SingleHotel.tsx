@@ -15,7 +15,7 @@ const SingleHotel = () => {
     isError,
   } = useQuery(
     "fetchHotelById",
-    () => apiClient.fetchHotelById(hotelId || ""),
+    () => apiClient.fetchMyHotelById(hotelId || ""),
     {
       enabled: !!hotelId,
     },
