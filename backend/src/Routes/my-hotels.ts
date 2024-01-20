@@ -2,8 +2,9 @@ import express, { Request, Response } from 'express'
 import multer from 'multer'
 import verifyToken from '../Middleware/auth'
 import { body } from 'express-validator'
-import { myHotels } from '../Controller/my-hotels'
+import { myHotels, uploadImages } from '../Controller/my-hotels'
 import Hotel from '../Models/hotel'
+import { HotelType } from '../shared/types'
 
 const router = express.Router()
 const storage = multer.memoryStorage()
@@ -48,5 +49,63 @@ router.get('/', verifyToken, async (req: Request, res: Response) => {
     })
   }
 })
+
+router.get('/:id', verifyToken, async (req: Request, res: Response) => {
+  const id = req.params.id.toString()
+
+  try {
+    const hotel = await Hotel.findOne({
+      _id: id,
+      userId: req.userId
+    })
+    res.json(hotel)
+  } catch (error) {
+    res.status(500).json({
+      message: 'Error fetching hotels'
+    })
+  }
+})
+
+router.put(
+  '/:hotelId',
+  verifyToken,
+  upload.array('imageFiles'),
+  async (req: Request, res: Response) => {
+    const id = req.params.hotelId.toString()
+
+    try {
+      const updatedHotel: HotelType = req.body
+      updatedHotel.lastUpdated = new Date()
+
+      const hotel = await Hotel.findOneAndUpdate(
+        {
+          _id: req.params.hotelId,
+          userId: req.userId
+        },
+        updatedHotel,
+        { new: true }
+      )
+
+      if (!hotel) {
+        return res.status(404).json({
+          message: 'Hotel not found'
+        })
+      }
+
+      const files = req.files as Express.Multer.File[]
+      const updatedImageUrls = await uploadImages(files)
+
+      hotel.imageUrls = [...updatedImageUrls, ...(updatedImageUrls || [])]
+
+      await hotel.save()
+
+      res.status(201).json(hotel)
+    } catch (error) {
+      res.status(500).json({
+        message: 'Error fetching hotels'
+      })
+    }
+  }
+)
 
 export default router

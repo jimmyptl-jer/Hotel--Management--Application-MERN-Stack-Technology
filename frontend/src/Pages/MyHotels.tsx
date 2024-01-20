@@ -42,7 +42,7 @@ const MyHotels = () => {
             <div className="grid grid-cols-5 gap-2">
               <div className="border border-slate-300 rounded-sm p-3 flex items-center">
                 <BsMap className="mr-1" />
-                {hotel.city},{hotel.county}
+                {hotel.city},{hotel.country}
               </div>
 
               <div className="border border-slate-300 rounded-sm p-3 flex items-center">
@@ -65,12 +65,19 @@ const MyHotels = () => {
                 {hotel.starRating}
               </div>
             </div>
-            <span className="flex justify-end">
+            <span className="flex justify-start gap-2">
               <Link
-                className="flex bg-blue-600 text-white text-xl font-bold p-2 hover:bg-blue-500"
-                to={`/edit-hotel/${hotel._id}`}
+                className="flex bg-blue-600 text-white text-md font-normal p-2 hover:bg-blue-500"
+                to={`edit-hotel/${hotel._id}`}
               >
                 Edit Hotel
+              </Link>
+
+              <Link
+                className="flex bg-blue-600 text-white text-md font-normal p-2 hover:bg-blue-500"
+                to={`details/${hotel._id}`}
+              >
+                View Hotel
               </Link>
             </span>
           </div>

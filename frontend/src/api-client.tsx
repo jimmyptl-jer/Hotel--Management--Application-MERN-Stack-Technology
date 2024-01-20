@@ -1,7 +1,8 @@
 import { SignInFormData } from "./Pages/Login";
 import { RegisterFormData } from "./Pages/Register";
 
-import { HotelType } from "../../backend/src/Models/hotel";
+import { HotelType } from "../../backend/src/shared/types";
+import { HotelFormData } from "./forms/ManageHotelForm";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
@@ -85,6 +86,38 @@ export const fetchMyHotels = async (): Promise<HotelType[]> => {
 
   if (!response.ok) {
     throw new Error("Error fetching hotels");
+  }
+
+  return response.json();
+};
+
+export const fetchHotelById = async (hotelId: string): Promise<HotelType[]> => {
+  const response = await fetch(
+    `http://localhost:3000/api/my-hotels/${hotelId}`,
+    {
+      credentials: "include",
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Error fetching hotels");
+  }
+
+  return response.json();
+};
+
+export const updateHotelById = async (hotelFormData: HotelFormData) => {
+  const response = await fetch(
+    `http://localhost:3000/api/my-hotels/${hotelFormData.get("hotelId")}`,
+    {
+      method: "PUT",
+      body: hotelFormData,
+      credentials: "include",
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Error Updating Hotel");
   }
 
   return response.json();
