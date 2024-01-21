@@ -1,9 +1,12 @@
 import Layout from "./Layout/Layout";
 import { Route, Routes } from "react-router-dom";
+
+import { useAppContext } from "./Context/AppContext";
+
 import Register from "./Pages/Register";
 import Login from "./Pages/Login";
 import AddHotel from "./Pages/AddHotel";
-import { useAppContext } from "./Context/AppContext";
+import Search from "./Pages/Search";
 import MyHotels from "./Pages/MyHotels";
 import SingleHotel from "./Pages/SingleHotel";
 import EditHotel from "./Pages/EditHotel";
@@ -26,7 +29,7 @@ const App = () => {
         path="/search"
         element={
           <Layout>
-            <p>Search Page</p>
+            <Search />
           </Layout>
         }
       />
