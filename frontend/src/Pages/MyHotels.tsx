@@ -68,14 +68,14 @@ const MyHotels = () => {
             <span className="flex justify-start gap-2">
               <Link
                 className="flex bg-blue-600 text-white text-md font-normal p-2 hover:bg-blue-500"
-                to={`edit-hotel/${hotel._id}`}
+                to={`/edit-hotel/${hotel._id}`}
               >
                 Edit Hotel
               </Link>
 
               <Link
                 className="flex bg-blue-600 text-white text-md font-normal p-2 hover:bg-blue-500"
-                to={`details/${hotel._id}`}
+                to={`/details/${hotel._id}`}
               >
                 View Hotel
               </Link>
