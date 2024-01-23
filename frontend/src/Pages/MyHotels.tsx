@@ -14,8 +14,6 @@ const MyHotels = () => {
     },
   );
 
-  console.log(hotelData);
-
   if (!hotelData) {
     return <span>No Hotels found</span>;
   }

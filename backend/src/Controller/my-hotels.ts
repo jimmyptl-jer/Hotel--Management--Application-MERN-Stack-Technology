@@ -29,7 +29,6 @@ export const myHotels = async (req: Request, res: Response) => {
     // 4. Return 201 status
     res.status(201).json(hotel)
   } catch (error) {
-    console.error('Error while creating hotel:', error)
     res.status(500).json({ message: 'Something went wrong', error })
   }
 }

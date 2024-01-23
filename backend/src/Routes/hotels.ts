@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express'
 import Hotel from '../Models/hotel'
+import { param, validationResult } from 'express-validator'
 
 /**
  * GET /search - Endpoint for searching hotels with pagination.
@@ -48,5 +49,29 @@ router.get('/search', async (req: Request, res: Response) => {
     })
   }
 })
+
+router.get(
+  '/:id',
+  [param('id').notEmpty().withMessage('Hotel ID is Required')],
+  async (req: Request, res: Response) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() })
+    }
+
+    const id = req.params.id.toString()
+
+    try {
+      const hotel = await Hotel.findById({
+        _id: id
+      })
+      res.json(hotel)
+    } catch (error) {
+      res.status(500).json({
+        message: 'Error fetching hotel'
+      })
+    }
+  }
+)
 
 export default router

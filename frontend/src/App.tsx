@@ -8,7 +8,7 @@ import Login from "./Pages/Login";
 import AddHotel from "./Pages/AddHotel";
 import Search from "./Pages/Search";
 import MyHotels from "./Pages/MyHotels";
-import SingleHotel from "./Pages/SingleHotel";
+import HotelDetail from "./Pages/HotelDetail";
 import EditHotel from "./Pages/EditHotel";
 
 const App = () => {
@@ -84,7 +84,7 @@ const App = () => {
             path="/details/:hotelId"
             element={
               <Layout>
-                <SingleHotel />
+                <HotelDetail />
               </Layout>
             }
           />
