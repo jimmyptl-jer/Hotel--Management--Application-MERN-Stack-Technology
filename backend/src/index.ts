@@ -9,18 +9,12 @@ import { v2 as cloudinary } from 'cloudinary'
 import userRoutes from './Routes/users'
 import authRoutes from './Routes/auth'
 import myHotelRoutes from './Routes/my-hotels'
+import hotelRoutes from './Routes/hotels'
 
 const app = express()
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-
-// app.use(
-//   cors({
-//     origin: 'http://localhost:5173', // Update with your frontend origin
-//     credentials: true
-//   })
-// )
 
 app.use(
   cors({
@@ -34,6 +28,7 @@ app.use(express.static(path.join(__dirname, '../../frontend/dist')))
 app.use('/api/users', userRoutes)
 app.use('/api/auth', authRoutes)
 app.use('/api/my-hotels', myHotelRoutes)
+app.use('/api/hotels', hotelRoutes)
 
 app.get('*', (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'))
