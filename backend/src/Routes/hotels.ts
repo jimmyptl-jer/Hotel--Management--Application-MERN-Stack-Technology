@@ -43,8 +43,6 @@ router.get('/search', async (req: Request, res: Response) => {
     // Send the response as JSON to the client
     res.json(response)
   } catch (error) {
-    // Handle errors and send an internal server error response
-    console.error('Error:', error)
     res.status(500).json({
       message: 'Something went wrong'
     })

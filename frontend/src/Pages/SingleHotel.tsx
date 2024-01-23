@@ -7,7 +7,6 @@ import * as apiClient from "../api-client";
 
 const SingleHotel = () => {
   const { hotelId } = useParams();
-  console.log(hotelId);
 
   const {
     data: hotel,
@@ -28,8 +27,6 @@ const SingleHotel = () => {
   if (isError || !hotel) {
     return <div>Error fetching hotel details. Please try again later.</div>;
   }
-
-  console.log(hotel);
 
   return (
     <div>
