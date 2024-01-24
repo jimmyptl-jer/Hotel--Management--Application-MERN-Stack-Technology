@@ -1,9 +1,8 @@
 import { useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { useSearchContext } from "../Context/SearchContext";
-import { useAppContext } from "../Context/AppContext";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useSearchContext } from "../../Context/SearchContext";
+import { useAppContext } from "../../Context/AppContext";
 
 type Props = {
   hotelId: string;
@@ -24,8 +23,8 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
   const location = useLocation();
 
   const {
-    register,
     watch,
+    register,
     handleSubmit,
     setValue,
     formState: { errors },
@@ -64,12 +63,12 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
       data.adultCount,
       data.childCount,
     );
-    navigate(`/hotel/${hotelId}/booking}`, { state: { from: location } });
+    navigate(`/hotel/${hotelId}/booking`);
   };
 
   return (
-    <div className="flex flex-col p-4 bg-blue-400 gap-4">
-      <h3 className="text-md font-bold">${pricePerNight}</h3>
+    <div className="flex flex-col p-4 bg-blue-200 gap-4">
+      <h3 className="text-md font-bold">£{pricePerNight}</h3>
       <form
         onSubmit={
           isLoggedIn ? handleSubmit(onSubmit) : handleSubmit(onSignInClick)
@@ -78,8 +77,8 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
         <div className="grid grid-cols-1 gap-4 items-center">
           <div>
             <DatePicker
-              selected={checkIn}
               required
+              selected={checkIn}
               onChange={(date) => setValue("checkIn", date as Date)}
               selectsStart
               startDate={checkIn}
@@ -91,11 +90,10 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
               wrapperClassName="min-w-full"
             />
           </div>
-
           <div>
             <DatePicker
-              selected={checkOut}
               required
+              selected={checkOut}
               onChange={(date) => setValue("checkOut", date as Date)}
               selectsStart
               startDate={checkIn}
@@ -107,8 +105,7 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
               wrapperClassName="min-w-full"
             />
           </div>
-
-          <div className="bg-white px-2 py-1 gap-2 flex flex-cols">
+          <div className="flex bg-white px-2 py-1 gap-2">
             <label className="items-center flex">
               Adults:
               <input
@@ -117,16 +114,15 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
                 min={1}
                 max={20}
                 {...register("adultCount", {
-                  required: "This filed is required",
+                  required: "This field is required",
                   min: {
                     value: 1,
-                    message: "Minimum number of adults is 1.",
+                    message: "There must be at least one adult",
                   },
                   valueAsNumber: true,
                 })}
               />
             </label>
-
             <label className="items-center flex">
               Children:
               <input
@@ -151,7 +147,7 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
             </button>
           ) : (
             <button className="bg-blue-600 text-white h-full p-2 font-bold hover:bg-blue-500 text-xl">
-              SignIn to Book Now
+              Sign in to Book
             </button>
           )}
         </div>

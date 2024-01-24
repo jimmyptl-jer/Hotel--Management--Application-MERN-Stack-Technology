@@ -10,6 +10,7 @@ import Search from "./Pages/Search";
 import MyHotels from "./Pages/MyHotels";
 import HotelDetail from "./Pages/HotelDetail";
 import EditHotel from "./Pages/EditHotel";
+import Booking from "./Pages/Booking";
 
 const App = () => {
   const { isLoggedIn } = useAppContext();
@@ -98,6 +99,19 @@ const App = () => {
             element={
               <Layout>
                 <EditHotel />
+              </Layout>
+            }
+          />
+        </>
+      )}
+
+      {isLoggedIn && (
+        <>
+          <Route
+            path="/hotel/:hotelId/booking"
+            element={
+              <Layout>
+                <Booking />
               </Layout>
             }
           />
