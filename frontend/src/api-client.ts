@@ -4,7 +4,8 @@ import { RegisterFormData } from './Pages/Register'
 import {
   HotelSearchResponse,
   HotelType,
-  UserType
+  UserType,
+  paymentIntentResponse
 } from '../../backend/src/shared/types'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || ''
@@ -164,4 +165,32 @@ export const searchHotels = async (
 
   // Assuming your API returns JSON, parse and return the result
   return response.json()
+}
+export const createPaymentIntent = async (
+  hotelId: string,
+  numberOfNights: string
+): Promise<paymentIntentResponse> => {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/api/hotels/${hotelId}/booking/payment-intent`,
+      {
+        credentials: 'include',
+        method: 'POST',
+        body: JSON.stringify({ numberOfNights }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+
+    if (!response.ok) {
+      throw new Error('Could not create payment intent')
+    }
+
+    // Assuming you want to return some data from the response
+    const responseData = await response.json()
+    return responseData
+  } catch (error) {
+    throw new Error('Error creating payment intent')
+  }
 }

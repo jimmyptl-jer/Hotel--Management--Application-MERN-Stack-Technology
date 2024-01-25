@@ -141,7 +141,7 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
               </span>
             )}
           </div>
-          {isLoggedIn ? (
+          {/* {isLoggedIn ? (
             <button className="bg-blue-600 text-white h-full p-2 font-bold hover:bg-blue-500 text-xl">
               Book Now
             </button>
@@ -149,7 +149,7 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
             <button className="bg-blue-600 text-white h-full p-2 font-bold hover:bg-blue-500 text-xl">
               Sign in to Book
             </button>
-          )}
+          )} */}
         </div>
       </form>
     </div>

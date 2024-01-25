@@ -1,8 +1,12 @@
-import { UserType } from "../../../../backend/src/shared/types";
+import {
+  UserType,
+  paymentIntentResponse,
+} from "../../../../backend/src/shared/types";
 import { useForm } from "react-hook-form";
 
 type Props = {
   currentUser: UserType;
+  paymentIntent: paymentIntentResponse;
 };
 
 type BookingFormData = {
@@ -11,7 +15,7 @@ type BookingFormData = {
   email: string;
 };
 
-const BookingForm = ({ currentUser }: Props) => {
+const BookingForm = ({ currentUser, paymentIntent }: Props) => {
   const { register, handleSubmit } = useForm<BookingFormData>({
     defaultValues: {
       firstName: currentUser.firstName,
@@ -56,6 +60,12 @@ const BookingForm = ({ currentUser }: Props) => {
             {...register("email")}
           />
         </label>
+      </div>
+
+      <div className="bg-blue-200 p-4 rounded-md">
+        <div className="font-semi-bold text-lg">
+          Total Cost : ${paymentIntent.totalCost.toFixed(2)}
+        </div>
       </div>
     </form>
   );

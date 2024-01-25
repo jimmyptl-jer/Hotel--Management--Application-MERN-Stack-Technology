@@ -1,8 +1,8 @@
 import { HotelType } from "../../../backend/src/shared/types";
 
 type Props = {
-  checkIn: date;
-  checkOut: date;
+  checkIn: Date;
+  checkOut: Date;
   adultCount: number;
   childCount: number;
   numberOfNights: number;
